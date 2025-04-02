@@ -1,0 +1,3 @@
+C:/Users/surfaceLaptop2/CLionProjects/typingspeedtest/cmake-build-debug/CMakeFiles/typingspeedtest.dir
+C:/Users/surfaceLaptop2/CLionProjects/typingspeedtest/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/surfaceLaptop2/CLionProjects/typingspeedtest/cmake-build-debug/CMakeFiles/rebuild_cache.dir
