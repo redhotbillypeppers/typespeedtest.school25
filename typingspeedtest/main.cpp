@@ -27,7 +27,7 @@ int main() {
         std::cin >> menuChoiceIndex;
     };
 
-
+    //while statement
     while (std::cin.fail() || menuChoiceIndex < 1 || menuChoiceIndex > 6) {
         std::cin.clear();
         std::cin.ignore(500, '\n');
