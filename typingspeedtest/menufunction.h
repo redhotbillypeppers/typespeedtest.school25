@@ -88,19 +88,19 @@ int menuFunction(std::string userName) {
 
     switch (menuChoiceIndex) {
         case 1:
-
+            whichTestFunction(0);
             return 1;
         case 2:
-
+            whichTestFunction(1);
             return 1;
         case 3:
-
+            whichTestFunction(2);
             return 1;
         case 4:
-
+            whichTestFunction(3);
             return 1;
         case 5:
-
+            //statistics add here
             return 1;
         case 6:
             return 0;
