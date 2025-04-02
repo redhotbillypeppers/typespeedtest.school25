@@ -22,7 +22,7 @@ int main() {
             << "    2. Medium Test\n"
             << "    3. Hard Test\n"
             << "    4. Analysis Mode\n"
-            << "    5. Stats\n"
+            << "    5. User Stats\n"
             << "    6. Back to Games\n";
         std::cin >> menuChoiceIndex;
     };
