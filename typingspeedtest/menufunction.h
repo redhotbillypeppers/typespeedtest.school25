@@ -22,17 +22,17 @@ void whichTestFunction (int menuChoiceIndex){
     char userAnswer;
 
     auto testCountdown = [&](){
-        std::cout << "3\n"
-        pause()
-        std::cout << "2\n"
-        pause()
-        std::cout << "1\n"
-        pause()
-        std::cout << "Go!"
+        std::cout << "3\n";
+        pause();
+        std::cout << "2\n";
+        pause();
+        std::cout << "1\n";
+        pause();
+        std::cout << "Go!";
     };
 
-    std::string emht[4] = {"easy", "medium", "hard", "Analysis"};
-    std::cout << "You have chosen the " << emht[menuChoiceIndex] << " test.\n Do you want to continue? (Y/N)";
+    std::string emht[4] = {"easy", "medium", "hard", "analysis"};
+    std::cout << "You have chosen the " << emht[menuChoiceIndex] << " test.\n Do you wish to continue? (Y/N)";
     std::cin >> userAnswer;
 
 
@@ -88,19 +88,19 @@ int menuFunction(std::string userName) {
 
     switch (menuChoiceIndex) {
         case 1:
-
+            whichTestFunction(0);
             return 1;
         case 2:
-
+            whichTestFunction(1);
             return 1;
         case 3:
-
+            whichTestFunction(2);
             return 1;
         case 4:
-
+            whichTestFunction(3);
             return 1;
         case 5:
-
+            //statistics add here
             return 1;
         case 6:
             return 0;
