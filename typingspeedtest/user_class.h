@@ -33,6 +33,6 @@ class user {
      alltestcount += WPMGames[j].size();
      alltestsum += singletestsum;
     }
-  averageWPM[5] = alltestcount/alltestsum;
+  averageWPM[5] = alltestsum/alltestcount;
   }
 }
