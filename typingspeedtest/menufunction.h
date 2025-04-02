@@ -31,8 +31,8 @@ void whichTestFunction (int menuChoiceIndex){
         std::cout << "Go!";
     };
 
-    std::string emht[4] = {"easy", "medium", "hard", "Analysis"};
-    std::cout << "You have chosen the " << emht[menuChoiceIndex] << " test.\n Do you want to continue? (Y/N)";
+    std::string emht[4] = {"easy", "medium", "hard", "analysis"};
+    std::cout << "You have chosen the " << emht[menuChoiceIndex] << " test.\n Do you wish to continue? (Y/N)";
     std::cin >> userAnswer;
 
 
