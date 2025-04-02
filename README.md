@@ -1,2 +1,2 @@
 # typespeedtest.school25
-My School monopoly project
+My School type speed test project
