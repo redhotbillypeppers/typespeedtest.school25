@@ -22,13 +22,13 @@ void whichTestFunction (int menuChoiceIndex){
     char userAnswer;
 
     auto testCountdown = [&](){
-        std::cout << "3\n"
-        pause()
-        std::cout << "2\n"
-        pause()
-        std::cout << "1\n"
-        pause()
-        std::cout << "Go!"
+        std::cout << "3\n";
+        pause();
+        std::cout << "2\n";
+        pause();
+        std::cout << "1\n";
+        pause();
+        std::cout << "Go!";
     };
 
     std::string emht[4] = {"easy", "medium", "hard", "Analysis"};
