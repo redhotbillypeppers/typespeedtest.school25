@@ -1,10 +1,11 @@
 #ifndef GAMESFUNCTION_H
 #define GAMESFUNCTION_H
 
-#include "cinClear_nd_pause.h"
+
 #include <string>
 #include <iostream>
 #include <random>
+#include "whichTestFunction.h"
 
 int menuFunction(std::string userName) {
     int menuChoiceIndex;

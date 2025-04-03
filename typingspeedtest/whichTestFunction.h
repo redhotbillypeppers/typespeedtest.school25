@@ -1,7 +1,7 @@
-
 #include <iostream>
 #include "word_array_easy.h"
 #include "word_array_hard.h"
+#include "cinClear_nd_pause.h"
 
 void whichTestFunction (int menuChoiceIndex){
     int easyListSize = sizeof(easyList)/sizeof(easyList[0]);
@@ -74,7 +74,7 @@ void whichTestFunction (int menuChoiceIndex){
         } else {
             pause(1);
             auto time = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
-            std::cout << "Your WPM for this  test was " << ((15/time.count())*60) << " words per minute.";
+            std::cout << "Your WPM for this test was " << ((15/time.count())*60) << " words per minute.";
 
             pause(1);
             std::cout << "\nGoing back to menu...\n";
