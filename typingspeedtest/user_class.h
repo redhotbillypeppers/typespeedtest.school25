@@ -22,17 +22,17 @@ class user {
 //0=easy 1=medium 2=hard 3=test emh = easy medium hard
 
   void wpmAverageCalc0123(){
-    float alltestsum = 0.00;
-    float alltestcount = 0.00;
+    float allTestWPMsum = 0.00;
+    float allTestCount = 0.00;
     for(int j = 0; j<4; j++){
-      float singletestsum = 0.00;
+      float singleTestSum = 0.00;
       for(int i = 0; i < WPMGames[j].size(); i++){
-        singletestsum += WPMGames[j][i];
+        singleTestSum += WPMGames[j][i];
       }
-     averageWPM[j] = (singletestsum / WPMGames.size());
-     alltestcount += WPMGames[j].size();
-     alltestsum += singletestsum;
+     averageWPM[j] = (singleTestSum / WPMGames.size());
+     allTestCount += WPMGames[j].size();
+     allTestWPMsum += singleTestSum;
     }
-  averageWPM[5] = alltestsum/alltestcount;
+  averageWPM[5] = allTestWPMsum/allTestCount;
   }
 }
