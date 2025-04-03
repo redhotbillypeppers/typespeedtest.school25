@@ -43,48 +43,71 @@ void whichTestFunction (int menuChoiceIndex){
         std::cin >> userAnswer;
     }
 
-    std::string randomTestSentence;
-    std::string inputSentence;
-    if (userAnswer == 'y' || userAnswer == 'Y') {
-        switch (menuChoiceIndex) {
-            case 1: {
-                std::cout << "\nPlease type the given word sequence EXACTLY on GO!." << std::endl;
-                testCountdown();
-                for(int i = 0; i < 15; i++){
-                    randomTestSentence += easyList[rand() % (easyListSize + 1)];
-                }
-                std::cout << randomTestSentence << std::endl;
-                auto startTime = std::chrono::high_resolution_clock::now();
-                std::getline(std::cin, inputSentence);
-                auto endTime = std::chrono::high_resolution_clock::now();
 
-                if (inputSentence + " " != randomTestSentence) {
-                    pause();
-                    std::cout << "You didnt type the sequence exactly :(\n ";
-                    pause();
-                    std::cout << "\nGoing back to menu...\n";
-                    pause();
+    auto officialTypeTest = [&](int testType) {
+        std::string randomTestSentence;
+        std::string inputSentence;
+        std::cout << "\nPlease type the given word sequence EXACTLY on GO!." << std::endl;
+        testCountdown();
 
-                    std::cout<< randomTestSentence <<"\n" << inputSentence << std::endl;
-                } else {
-                    pause();
-                    auto time = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
-                    std::cout << "Your WPM for this easy test was " << ((15/time.count())*60) << " words per minute.";
-
-                    pause();
-                    std::cout << "\nGoing back to menu...\n";
-                    pause();
+            for(int i = 0; i < 15; i++) {
+                switch (testType) {
+                    case 1:
+                        randomTestSentence += easyList[rand() % (easyListSize + 1)];
+                        break;
+                    case 2:{
+                        int coinFlip = rand() % 2;
+                        if (coinFlip == 0) {
+                            randomTestSentence += easyList[rand() % (easyListSize + 1)];
+                        } else {
+                            randomTestSentence += hardList[rand() % (hardListSize + 1)];
+                        }
+                    }
+                        break;
+                    case 3:
+                        randomTestSentence += hardList[rand() % (hardListSize + 1)];
+                        break;
                 }
             }
+
+        std::cout << randomTestSentence << std::endl;
+        auto startTime = std::chrono::high_resolution_clock::now();
+        std::getline(std::cin, inputSentence);
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        if (inputSentence + " " != randomTestSentence) {
+            pause();
+            std::cout << "You didnt type the sequence exactly :(\n ";
+            pause();
+            std::cout << "\nGoing back to menu...\n";
+            pause();
+
+            std::cout<< randomTestSentence <<"\n" << inputSentence << std::endl;
+        } else {
+            pause();
+            auto time = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
+            std::cout << "Your WPM for this  test was " << ((15/time.count())*60) << " words per minute.";
+
+            pause();
+            std::cout << "\nGoing back to menu...\n";
+            pause();
+        }
+    };
+
+
+    if (userAnswer == 'y' || userAnswer == 'Y') {
+        switch (menuChoiceIndex) {
+            case 1:
+            officialTypeTest(menuChoiceIndex);
             break;
         case 2:
-
+            officialTypeTest(menuChoiceIndex);
             break;
         case 3:
-
+            officialTypeTest(menuChoiceIndex);
             break;
         case 4:
-
+            officialTypeTest(menuChoiceIndex);
             break;
         }
     }
