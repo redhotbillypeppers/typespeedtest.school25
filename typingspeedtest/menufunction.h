@@ -33,42 +33,31 @@ void whichTestFunction (int menuChoiceIndex){
         cinClear();
     };
 
-    std::string emht[4] = {"easy", "medium", "hard", "analysis"};
-    std::cout << "You have chosen the " << emht[menuChoiceIndex - 1] << " test.\nDo you wish to continue? (Y/N)\n";
-    std::cin >> userAnswer;
-
-    while( !std::cin.fail() && userAnswer!='y' && userAnswer!='n' && userAnswer!='N' && userAnswer!='Y' ) {
-        cinClear();
-        std::cout << "Invalid response, please enter either Y or N: ";
-        std::cin >> userAnswer;
-    }
-
-
     auto officialTypeTest = [&](int testType) {
         std::string randomTestSentence;
         std::string inputSentence;
         std::cout << "\nPlease type the given word sequence EXACTLY on GO!." << std::endl;
         testCountdown();
 
-            for(int i = 0; i < 15; i++) {
-                switch (testType) {
-                    case 1:
+        for(int i = 0; i < 15; i++) {
+            switch (testType) {
+                case 1:
+                    randomTestSentence += easyList[rand() % (easyListSize + 1)];
+                break;
+                case 2:{
+                    int coinFlip = rand() % 2;
+                    if (coinFlip == 0) {
                         randomTestSentence += easyList[rand() % (easyListSize + 1)];
-                        break;
-                    case 2:{
-                        int coinFlip = rand() % 2;
-                        if (coinFlip == 0) {
-                            randomTestSentence += easyList[rand() % (easyListSize + 1)];
-                        } else {
-                            randomTestSentence += hardList[rand() % (hardListSize + 1)];
-                        }
-                    }
-                        break;
-                    case 3:
+                    } else {
                         randomTestSentence += hardList[rand() % (hardListSize + 1)];
-                        break;
+                    }
                 }
+                break;
+                case 3:
+                    randomTestSentence += hardList[rand() % (hardListSize + 1)];
+                break;
             }
+        }
 
         std::cout << randomTestSentence << std::endl;
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -93,6 +82,19 @@ void whichTestFunction (int menuChoiceIndex){
             pause();
         }
     };
+
+    std::string emht[4] = {"easy", "medium", "hard", "analysis"};
+    std::cout << "You have chosen the " << emht[menuChoiceIndex - 1] << " test.\nDo you wish to continue? (Y/N)\n";
+    std::cin >> userAnswer;
+
+    while( !std::cin.fail() && userAnswer!='y' && userAnswer!='n' && userAnswer!='N' && userAnswer!='Y' ) {
+        cinClear();
+        std::cout << "Invalid response, please enter either Y or N: ";
+        std::cin >> userAnswer;
+    }
+
+
+
 
 
     if (userAnswer == 'y' || userAnswer == 'Y') {
