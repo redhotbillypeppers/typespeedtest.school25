@@ -40,6 +40,16 @@ void analysisTestFunction () {
     float wpmAverage;
     char userAnswer;
 
+    auto lambdaTestFunction = [&](float wordCount) {
+        auto startTime = std::chrono::high_resolution_clock::now();
+        std::getline(std::cin, randomTestSentence);
+        auto endTime = std::chrono::high_resolution_clock::now();
+        auto time = std::chrono::duration<float>(endTime - startTime);
+        float wpmAverageTest = (wordCount/time.count()) * 60;
+        wpmAverageDenominator += wordCount;
+        wpmAverageNumerator += wpmAverageTest * wordCount;
+        std::cout << wpmAverageTest << " words per minute. " << std::endl;
+    };
 
     std::cout << "You have chosen the Analysis test." << std::endl;
     std::cout << "This test will have 3 parts, \n" << std::endl;
@@ -69,24 +79,9 @@ void analysisTestFunction () {
         }
     }
     std::cout << randomTestSentence << std::endl;
-
-
-
-    auto startTime = std::chrono::high_resolution_clock::now();
-    std::getline(std::cin, randomTestSentence);
-    cinClear();
-    auto endTime = std::chrono::high_resolution_clock::now();
-    auto time = std::chrono::duration<float>(endTime - startTime);
-
-    float wpmAverageTest = (15.00/time.count()) * 60;
-    wpmAverageDenominator += 15.00;
-    wpmAverageNumerator += wpmAverageTest * 15.00;
-
-    std::cout << wpmAverageTest << " words per minute. " << std::endl;
-
+    lambdaTestFunction(15.00);
 
     pause(1);
-
 
     std::cout << "The next section is beginning on GO!" << std::endl;
     testCountdown();
@@ -99,23 +94,7 @@ void analysisTestFunction () {
         }
     }
     std::cout << randomTestSentence << std::endl;
-
-
-    {
-        auto startTime = std::chrono::high_resolution_clock::now();
-        std::getline(std::cin, randomTestSentence);
-        cinClear();
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto time = std::chrono::duration<float>(endTime - startTime);
-
-        float wpmAverageTest = (10.00/time.count()) * 60;
-        wpmAverageDenominator += 10.00;
-        wpmAverageNumerator += wpmAverageTest * 15.00;
-
-        std::cout << wpmAverageTest << " words per minute. " << std::endl;
-    }
-
-
+    lambdaTestFunction(10.00);
 
     pause(1);
 
@@ -123,18 +102,7 @@ void analysisTestFunction () {
     testCountdown();
 
     std::cout << sentence[rand() % 21] << std::endl;
-    {
-        auto startTime = std::chrono::high_resolution_clock::now();
-        std::getline(std::cin, randomTestSentence);
-        cinClear();
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto time = std::chrono::duration<float>(endTime - startTime);
-        float wpmAverageTest = (10.00/time.count()) * 60;
-        wpmAverageDenominator += 10.00;
-        wpmAverageNumerator += wpmAverageTest * 15.00;
-    }
-
-
+    lambdaTestFunction(14.00);
 
 
     wpmAverage = wpmAverageNumerator/wpmAverageDenominator;
