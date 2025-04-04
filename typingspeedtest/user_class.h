@@ -11,7 +11,7 @@ class user {
   //user name
   std::string name;
 
-  //array of 3 vectors that store the game results
+  //array of 4 vectors that store the game results
   std::vector<float> WPMGames[4];
 
   //test average wpm variables
@@ -29,10 +29,10 @@ class user {
       for(int i = 0; i < WPMGames[j].size(); i++){
         singleTestSum += WPMGames[j][i];
       }
-     averageWPM[j] = (singleTestSum / WPMGames.size());
+     averageWPM[j] = (singleTestSum / std::size(WPMGames[j]));
      allTestCount += WPMGames[j].size();
      allTestWPMsum += singleTestSum;
     }
-  averageWPM[5] = allTestWPMsum/allTestCount;
+  averageWPM[4] = allTestWPMsum/allTestCount;
   }
 };

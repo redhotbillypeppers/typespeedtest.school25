@@ -1,7 +1,7 @@
 #include <string>
 std::string hardList[]=
     {
-"accommodate ","accommodation","achieve","across","aggressive",
+"accommodate","accommodation","achieve","across","aggressive",
 "aggression","apparently","appearance","argument","assassination",
 "basically","beginning","believe","bizarre","business","calendar",
 "Caribbean","cemetery","chauffeur","colleague","coming","committee",
