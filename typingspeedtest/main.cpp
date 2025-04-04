@@ -17,7 +17,6 @@ void testCountdown () {
     std::cout << "1\n";
     pause(1);
     std::cout << "Go!" << std::endl;
-    cinClear();
 }
 
 void wpmResponses (float wpm) {
@@ -37,26 +36,10 @@ void analysisTestFunction () {
     int hardListSize = std::size(hardList);
     std::string randomTestSentence;
     float wpmAverageNumerator;
-    float wpmAverageDenominator;
+    float wpmAverageDenominator = 0;
     float wpmAverage;
     char userAnswer;
 
-    auto testMeOut = [&](int wordCount) {
-        float wpmAverageTest;
-        if (wordCount == 14) {
-            std::cout << sentence[rand() % 21] << std::endl;
-        } else {
-            std::cout << randomTestSentence << std::endl;
-        }
-        auto startTime = std::chrono::high_resolution_clock::now();
-        std::getline(std::cin, randomTestSentence);
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto time = std::chrono::duration<float>(endTime - startTime);
-        wpmAverageTest = (wordCount/time.count()) * 60;
-        wpmAverageDenominator +=wordCount;
-        wpmAverageNumerator += wpmAverageTest * wordCount;
-        std::cout << wpmAverageTest << " words per minute. " << std::endl;
-    };
 
     std::cout << "You have chosen the Analysis test." << std::endl;
     std::cout << "This test will have 3 parts, \n" << std::endl;
@@ -70,6 +53,10 @@ void analysisTestFunction () {
         std::cout << "Invalid response, please enter either Y or N: ";
         std::cin >> userAnswer;
     }
+    cinClear();
+    if (userAnswer=='N' || userAnswer=='n') {
+        return;
+    }
 
     std::cout << "Please type as precisely as you can, starting on GO!" << std::endl;
     testCountdown();
@@ -81,8 +68,25 @@ void analysisTestFunction () {
             randomTestSentence += " ";
         }
     }
-    testMeOut(15);
+    std::cout << randomTestSentence << std::endl;
+
+
+
+    auto startTime = std::chrono::high_resolution_clock::now();
+    std::getline(std::cin, randomTestSentence);
+    cinClear();
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto time = std::chrono::duration<float>(endTime - startTime);
+
+    float wpmAverageTest = (15.00/time.count()) * 60;
+    wpmAverageDenominator += 15.00;
+    wpmAverageNumerator += wpmAverageTest * 15.00;
+
+    std::cout << wpmAverageTest << " words per minute. " << std::endl;
+
+
     pause(1);
+
 
     std::cout << "The next section is beginning on GO!" << std::endl;
     testCountdown();
@@ -94,18 +98,51 @@ void analysisTestFunction () {
             randomTestSentence += " ";
         }
     }
-    testMeOut(10);
+    std::cout << randomTestSentence << std::endl;
+
+
+    {
+        auto startTime = std::chrono::high_resolution_clock::now();
+        std::getline(std::cin, randomTestSentence);
+        cinClear();
+        auto endTime = std::chrono::high_resolution_clock::now();
+        auto time = std::chrono::duration<float>(endTime - startTime);
+
+        float wpmAverageTest = (10.00/time.count()) * 60;
+        wpmAverageDenominator += 10.00;
+        wpmAverageNumerator += wpmAverageTest * 15.00;
+
+        std::cout << wpmAverageTest << " words per minute. " << std::endl;
+    }
+
+
+
     pause(1);
 
     std::cout << "The next section is beginning on GO!" << std::endl;
     testCountdown();
-    testMeOut(14);
+
+    std::cout << sentence[rand() % 21] << std::endl;
+    {
+        auto startTime = std::chrono::high_resolution_clock::now();
+        std::getline(std::cin, randomTestSentence);
+        cinClear();
+        auto endTime = std::chrono::high_resolution_clock::now();
+        auto time = std::chrono::duration<float>(endTime - startTime);
+        float wpmAverageTest = (10.00/time.count()) * 60;
+        wpmAverageDenominator += 10.00;
+        wpmAverageNumerator += wpmAverageTest * 15.00;
+    }
+
+
+
+
     wpmAverage = wpmAverageNumerator/wpmAverageDenominator;
     std::cout << "For this analysis you typed at a pace of " << wpmAverage <<" words per minute " << std::endl;
     pause(1);
     wpmResponses(wpmAverage);
     pause(2);
-    std::cout << "Going back to menu..." <<std::endl;
+    std::cout << "\n\nGoing back to menu..." <<std::endl;
     pause(1);
 }
 
@@ -123,6 +160,7 @@ void whichTestFunction (int menuChoiceIndex){
         std::cout << "Invalid response, please enter either Y or N: ";
         std::cin >> userAnswer;
     }
+    cinClear();
 
     if (userAnswer == 'y' || userAnswer == 'Y') {
         std::string randomTestSentence;
@@ -190,7 +228,7 @@ void whichTestFunction (int menuChoiceIndex){
 
         if (inputSentence != randomTestSentence || inputSentence2 != randomTestSentence2) {
             pause(1);
-            std::cout << "You didnt type the sequence exactly :(\n ";
+            std::cout << "You didnt type the sequence exactly :(";
             pause(1);
             std::cout << "\nGoing back to menu...\n";
             pause(1);
@@ -233,6 +271,7 @@ int menuFunction(std::string userName) {
             << "    5. User Stats\n"
             << "    6. Back to Games\n";
         std::cin >> menuChoiceIndex;
+        cinClear();
     };
 
     menuPrinter();

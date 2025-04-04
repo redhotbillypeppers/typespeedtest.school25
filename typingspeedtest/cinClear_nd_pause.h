@@ -11,7 +11,7 @@
 
 void cinClear() {
     std::cin.clear();
-    std::cin.ignore(500, '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 void pause(int time){
