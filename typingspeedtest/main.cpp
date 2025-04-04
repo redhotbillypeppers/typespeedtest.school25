@@ -11,7 +11,7 @@ int main() {
     << "\nWelcome to Billy's word speed type tester!\n"
     << "\nPlease enter your name: ";
 
-    srand(time(NULL));
+    srand(time(nullptr));
 
     std::cin >> userName;
 
