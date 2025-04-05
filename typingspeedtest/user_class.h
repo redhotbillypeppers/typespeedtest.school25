@@ -41,7 +41,7 @@ class user {
       }
       /*^^ above is an "improved" range based for loop?
        *below is hand made while above is IDE generated
-       *
+       *vvv
       for(int i = 0; i < WPMGames[j].size(); i++){
         singleTestSum += WPMGames[j][i];
       }

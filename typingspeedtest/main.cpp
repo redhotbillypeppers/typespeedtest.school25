@@ -35,8 +35,8 @@ void analysisTestFunction () {
     int easyListSize = std::size(easyList);
     int hardListSize = std::size(hardList);
     std::string randomTestSentence;
-    float wpmAverageNumerator;
-    float wpmAverageDenominator = 0;
+    float wpmAverageNumerator = 0.0;
+    float wpmAverageDenominator = 0.0;
     float wpmAverage;
     char userAnswer;
     std::string userSentenceInput;
