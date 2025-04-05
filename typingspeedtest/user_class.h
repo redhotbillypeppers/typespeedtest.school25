@@ -21,18 +21,35 @@ class user {
 
 //0=easy 1=medium 2=hard 3=test emh = easy medium hard
 
+  user (std::string n) {
+    name = n;
+    for (int i = 0; i < 4; i++) {
+      WPMGames[i].resize(4);
+      for (int j = 0; j < 4; j++) {
+        WPMGames[i][j] = 0;
+      }
+    }
+
+  }
   void wpmAverageCalc0123(){
-    float allTestWPMsum = 0.00;
+    float allTestWPMSum = 0.00;
     float allTestCount = 0.00;
     for(int j = 0; j<4; j++){
       float singleTestSum = 0.00;
+      for(float i : WPMGames[j]){
+        singleTestSum += i;
+      }
+      /*^^ above is an "improved" range based for loop?
+       *below is hand made while above is IDE generated
+       *
       for(int i = 0; i < WPMGames[j].size(); i++){
         singleTestSum += WPMGames[j][i];
       }
+      */
      averageWPM[j] = (singleTestSum / std::size(WPMGames[j]));
      allTestCount += WPMGames[j].size();
-     allTestWPMsum += singleTestSum;
+     allTestWPMSum += singleTestSum;
     }
-  averageWPM[4] = allTestWPMsum/allTestCount;
+  averageWPM[4] = allTestWPMSum/allTestCount;
   }
 };

@@ -39,22 +39,40 @@ void analysisTestFunction () {
     float wpmAverageDenominator = 0;
     float wpmAverage;
     char userAnswer;
+    std::string userSentenceInput;
+
 
     auto lambdaTestFunction = [&](float wordCount) {
-        auto startTime = std::chrono::high_resolution_clock::now();
-        std::getline(std::cin, randomTestSentence);
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto time = std::chrono::duration<float>(endTime - startTime);
-        float wpmAverageTest = (wordCount/time.count()) * 60;
-        wpmAverageDenominator += wordCount;
-        wpmAverageNumerator += wpmAverageTest * wordCount;
-        std::cout << wpmAverageTest << " words per minute. " << std::endl;
+        int attempt = 0;
+        while (true) {
+            std::cout << randomTestSentence << std::endl;
+            auto startTime = std::chrono::high_resolution_clock::now();
+            std::getline(std::cin, userSentenceInput);
+            auto endTime = std::chrono::high_resolution_clock::now();
+            auto time = std::chrono::duration<float>(endTime - startTime);
+            if (userSentenceInput != randomTestSentence) {
+                attempt++;
+                if (attempt == 2) {
+                    std::cout << "You have made too many attempts for this part." << std::endl;
+                    std::cout << "Returning back to menu..." << std::endl;
+                    return 0;
+                }
+                std::cout << "You mistyped somewhere in this code. \nRestarting test section...\n";
+                testCountdown();
+            }else {
+                float wpmAverageTest = (wordCount/time.count()) * 60;
+                wpmAverageDenominator += wordCount;
+                wpmAverageNumerator += wpmAverageTest * wordCount;
+                std::cout << wpmAverageTest << " words per minute. " << std::endl;
+                return 1;
+            }
+        }
     };
 
     std::cout << "You have chosen the Analysis test." << std::endl;
     std::cout << "This test will have 3 parts, \n" << std::endl;
     std::cout << "1. A randomized list of 15 easy words\n2. A randomized list of 10 hard words \n3. A standard pre-generated sentence" << std::endl;
-    std::cout << "\nYou will also get 2 attempts for each part, in case you accidentally mistype something.\n(The 2nd attempt will be re-generated)\n";
+    std::cout << "\nYou will also get 2 attempts for each part, in case you accidentally mistype something.\n";
     std::cout << "\nDo you wish to continue? (Y/N)" << std::endl;
 
     std::cin >> userAnswer;
@@ -78,8 +96,9 @@ void analysisTestFunction () {
             randomTestSentence += " ";
         }
     }
-    std::cout << randomTestSentence << std::endl;
-    lambdaTestFunction(15.00);
+    if (lambdaTestFunction(15.00) == 0) {
+        return;
+    }
 
     pause(1);
 
@@ -93,17 +112,18 @@ void analysisTestFunction () {
             randomTestSentence += " ";
         }
     }
-    std::cout << randomTestSentence << std::endl;
-    lambdaTestFunction(10.00);
+    if (lambdaTestFunction(10.00) == 0) {
+        return;
+    }
 
     pause(1);
 
     std::cout << "The next section is beginning on GO!" << std::endl;
     testCountdown();
-
-    std::cout << sentence[rand() % 21] << std::endl;
-    lambdaTestFunction(14.00);
-
+    randomTestSentence = sentence[rand() % 21];
+    if (lambdaTestFunction(14.00) == 0) {
+        return;
+    }
 
     wpmAverage = wpmAverageNumerator/wpmAverageDenominator;
     std::cout << "For this analysis you typed at a pace of " << wpmAverage <<" words per minute " << std::endl;
