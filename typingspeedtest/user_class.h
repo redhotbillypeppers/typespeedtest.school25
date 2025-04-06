@@ -17,7 +17,7 @@ class user {
   //test average wpm variables
   //0 = easy 1= medium
   //2 = hard 3 = test 4 = total average
-  float averageWPM[5];
+  float averageWPM[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
 //0=easy 1=medium 2=hard 3=test emh = easy medium hard
 
@@ -25,6 +25,8 @@ class user {
     name = n;
   }
 
+
+  //method calculates total statistics
   void wpmAverageCalc0123(){
     float allTestWPMSum = 0.00;
     float allTestCount = 0.00;
@@ -33,9 +35,9 @@ class user {
       for(float i : WPMGames[j]){
         singleTestSum += i;
       }
-      /*^^ above is an "improved" range based for loop?
+      /*^ above is an "improved" range based for loop?
        *below is hand made while above is IDE generated
-       *vvv
+       *v
       for(int i = 0; i < WPMGames[j].size(); i++){
         singleTestSum += WPMGames[j][i];
       }

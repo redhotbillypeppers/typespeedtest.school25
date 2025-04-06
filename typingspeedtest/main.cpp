@@ -8,8 +8,8 @@
 #include "user_class.h"
 #include "sentence_array.h"
 
-user globalUserList[3] = {user(""),user(""),user("")};
-int whichUser = 0;
+user globalUserList[3] = {user(""),user("unnamed_user"),user("unnamed_user")};
+int globalWhichUser = 0;
 
 void testCountdown () {
     pause(1);
@@ -130,6 +130,7 @@ void analysisTestFunction () {
     }
 
     wpmAverage = wpmAverageNumerator/wpmAverageDenominator;
+    globalUserList[globalWhichUser].WPMGames[3].push_back(wpmAverage);
     std::cout << "For this analysis you typed at a pace of " << wpmAverage <<" words per minute " << std::endl;
     pause(1);
     wpmResponses(wpmAverage);
@@ -205,6 +206,7 @@ void whichTestFunction (int menuChoiceIndex){
                         randomTestSentence2 += " ";
                     }
                 }
+                break;
             }
             default:
                 std::cout << "Internal pass by value error! ";
@@ -213,7 +215,6 @@ void whichTestFunction (int menuChoiceIndex){
 
         std::cout << randomTestSentence << std::endl;
         std::cout << randomTestSentence2 << std::endl;
-        cinClear();
         auto startTime = std::chrono::high_resolution_clock::now();
         std::getline(std::cin, inputSentence);
         if (menuChoiceIndex == 2 || menuChoiceIndex == 3) {
@@ -232,6 +233,7 @@ void whichTestFunction (int menuChoiceIndex){
             pause(1);
             auto time = std::chrono::duration<double>(endTime - startTime);
             testWPM = (20.00/time.count())*60;
+            globalUserList[globalWhichUser].WPMGames[menuChoiceIndex-1].push_back(testWPM);
             std::cout << "Your WPM for this test was " << testWPM << " words per minute. ";
             pause(1);
             wpmResponses(testWPM);
@@ -243,6 +245,7 @@ void whichTestFunction (int menuChoiceIndex){
             pause(1);
             auto time = std::chrono::duration<double>(endTime - startTime);
             testWPM = (15.00/time.count())*60;
+            globalUserList[globalWhichUser].WPMGames[0].push_back(testWPM);
             std::cout << "Your WPM for this test was " << testWPM << " words per minute. ";
             wpmResponses(testWPM);
             pause(2);
@@ -253,39 +256,83 @@ void whichTestFunction (int menuChoiceIndex){
 }
 
 void statsMenu() {
+    int testTotalCount;
     int userAnswer;
 
-    std::cout << "1. Check user stats\n"
-                 "2. Change user name\n"
-                 "3. Change user" << std::endl;
+    auto menuPrinter = [&]() {
+        std::cout << "Billy's word speed type tester!\n"
+        << globalUserList[globalWhichUser].name << "'s stats:\n";
+        std::cout << "-----------------------------" << std::endl;
+        std::cout << "Average easy WPM: " << globalUserList[globalWhichUser].averageWPM[0] << std::endl;
+        std::cout << "Average medium WPM: " << globalUserList[globalWhichUser].averageWPM[1] << std::endl;
+        std::cout << "Average hard WPM: " << globalUserList[globalWhichUser].averageWPM[2] << std::endl;
+        std::cout << "Average analysis WPM: " << globalUserList[globalWhichUser].averageWPM[3] << std::endl;
+        std::cout << "Total average WPM: " << globalUserList[globalWhichUser].averageWPM[4] << std::endl;
+        std::cout << "\nEasy tests taken: " << globalUserList[globalWhichUser].WPMGames[0].size() << std::endl;
+        std::cout << "Medium tests taken: " << globalUserList[globalWhichUser].WPMGames[1].size() << std::endl;
+        std::cout << "Hard tests taken: " << globalUserList[globalWhichUser].WPMGames[2].size() << std::endl;
+        std::cout << "Analysis tests taken: " << globalUserList[globalWhichUser].WPMGames[3].size() << std::endl;
+        for (int i = 0; i < 4; i++) {
+            testTotalCount += globalUserList[globalWhichUser].WPMGames[i].size();
+        }
+        std::cout << "total tests taken: " << testTotalCount << std::endl;
+        std::cout << "-----------------------------" << std::endl;
 
-    std::cin >> userAnswer;
-    while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) {
-        cinClear();
-        std::cout << "Invalid input, Please enter a number between 1 and 3: ";
+        std::cout
+        << "1. Change user name\n"
+        << "2. Change user\n"
+        << "3. Exit back to menu" << std::endl;
+    };
+
+    globalUserList[globalWhichUser].wpmAverageCalc0123();
+    while (true) {
+        testTotalCount = 0;
+        menuPrinter();
         std::cin >> userAnswer;
-    }
+        while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) {
+            cinClear();
+            std::cout << "Invalid input, Please enter a number between 1 and 3: ";
+            std::cin >> userAnswer;
+        }
 
-    do {
-        std::cout << "Stats for: " << std::endl;
-        std::cout << "\nAverage Easy WPM: " << "\nEasy tests taken: " << std::endl;
-        std::cout << "\nAverage Medium WPM: " << "\nMedium tests taken: " << std::endl;
-        std::cout << "\nAverage Hard WPM: " << "\nHard tests taken: " << std::endl;
-        std::cout << "\nAverage Analysis WPM: " << "\nAnalysis tests taken: " << std::endl;
-        std::cout << "\nTotal Average WPM: " << "\nTotal tests taken: " << std::endl;
-
-        std::cout << "\nGo back to menu? (Y)" << std::endl;
-        std::cin >> userAnswer;
-    } while( userAnswer != 'y' || userAnswer != 'Y'); {
-        std::cout << "Invalid response.";
+        switch (userAnswer) {
+            case 1:
+                std::cout << "Change username to: " << std::endl;
+                std::cin >> globalUserList[globalWhichUser].name;
+                std::cout << "Username changed to: " << globalUserList[globalWhichUser].name << std::endl;
+                menuPrinter();
+                std::cout << "\nGo back to menu? (Y)" << std::endl;
+                break;
+            case 2:
+                std::cout << "Change to which user?" << std::endl;
+                std::cout << "1. " << globalUserList[0].name << std::endl;
+                std::cout << "2. " << globalUserList[1].name << std::endl;
+                std::cout << "3. " << globalUserList[2].name << std::endl;
+                std::cin >> globalWhichUser;
+                globalWhichUser -= 1;
+                while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) {
+                    cinClear();
+                    std::cout << "Invalid input, Please enter a number between 1 and 3: ";
+                    std::cin >> globalWhichUser;
+                    globalWhichUser -= 1;
+                }
+                break;
+            case 3:
+                std::cout << "Exiting back to menu..." << std::endl;
+                pause(1);
+                return;
+            default:
+                std::cout << "Error: invalid pass by (stats menu)";
+                exit(0);
+        }
     }
 }
 
-int menuFunction(std::string userName) {
+int menuFunction() {
     int menuChoiceIndex;
     auto menuPrinter = [&](){
         std::cout << "\nBilly's word speed type tester!\n"
-                  << userName
+                  << globalUserList[globalWhichUser].name
                   << ", please select an option!" << std::endl;
         std::cout
             << "    1. Easy Test\n"
@@ -343,7 +390,7 @@ int main() {
 
     int i = 1;
     while (i == 1) {
-        i = menuFunction(globalUserList[0].name);
+        i = menuFunction();
     }
 
     std::cout << "Goodbye!" << std::endl;
