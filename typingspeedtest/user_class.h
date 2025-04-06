@@ -23,14 +23,8 @@ class user {
 
   user (std::string n) {
     name = n;
-    for (int i = 0; i < 4; i++) {
-      WPMGames[i].resize(4);
-      for (int j = 0; j < 4; j++) {
-        WPMGames[i][j] = 0;
-      }
-    }
-
   }
+
   void wpmAverageCalc0123(){
     float allTestWPMSum = 0.00;
     float allTestCount = 0.00;

@@ -8,6 +8,9 @@
 #include "user_class.h"
 #include "sentence_array.h"
 
+user globalUserList[3] = {user(""),user(""),user("")};
+int whichUser = 0;
+
 void testCountdown () {
     pause(1);
     std::cout << "3\n";
@@ -55,6 +58,7 @@ void analysisTestFunction () {
                 if (attempt == 2) {
                     std::cout << "You have made too many attempts for this part." << std::endl;
                     std::cout << "Returning back to menu..." << std::endl;
+                    pause(1);
                     return 0;
                 }
                 std::cout << "You mistyped somewhere in this code. \nRestarting test section...\n";
@@ -202,11 +206,14 @@ void whichTestFunction (int menuChoiceIndex){
                     }
                 }
             }
-            break;
+            default:
+                std::cout << "Internal pass by value error! ";
+                exit(0);
         }
 
         std::cout << randomTestSentence << std::endl;
         std::cout << randomTestSentence2 << std::endl;
+        cinClear();
         auto startTime = std::chrono::high_resolution_clock::now();
         std::getline(std::cin, inputSentence);
         if (menuChoiceIndex == 2 || menuChoiceIndex == 3) {
@@ -245,6 +252,35 @@ void whichTestFunction (int menuChoiceIndex){
     }
 }
 
+void statsMenu() {
+    int userAnswer;
+
+    std::cout << "1. Check user stats\n"
+                 "2. Change user name\n"
+                 "3. Change user" << std::endl;
+
+    std::cin >> userAnswer;
+    while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) {
+        cinClear();
+        std::cout << "Invalid input, Please enter a number between 1 and 3: ";
+        std::cin >> userAnswer;
+    }
+
+    do {
+        std::cout << "Stats for: " << std::endl;
+        std::cout << "\nAverage Easy WPM: " << "\nEasy tests taken: " << std::endl;
+        std::cout << "\nAverage Medium WPM: " << "\nMedium tests taken: " << std::endl;
+        std::cout << "\nAverage Hard WPM: " << "\nHard tests taken: " << std::endl;
+        std::cout << "\nAverage Analysis WPM: " << "\nAnalysis tests taken: " << std::endl;
+        std::cout << "\nTotal Average WPM: " << "\nTotal tests taken: " << std::endl;
+
+        std::cout << "\nGo back to menu? (Y)" << std::endl;
+        std::cin >> userAnswer;
+    } while( userAnswer != 'y' || userAnswer != 'Y'); {
+        std::cout << "Invalid response.";
+    }
+}
+
 int menuFunction(std::string userName) {
     int menuChoiceIndex;
     auto menuPrinter = [&](){
@@ -266,8 +302,8 @@ int menuFunction(std::string userName) {
 
     while (std::cin.fail() || menuChoiceIndex < 1 || menuChoiceIndex > 6) {
         std::cout << "Invalid response, please enter a menu number(1-6)!\n";
-        cinClear();
         std::cin >> menuChoiceIndex;
+        cinClear();
     }
 
     switch (menuChoiceIndex) {
@@ -284,29 +320,32 @@ int menuFunction(std::string userName) {
             analysisTestFunction();
             return 1;
         case 5:
-            //statistics add here
-                return 1;
+            statsMenu();
+            return 1;
         case 6:
             return 0;
+        default:
+            std::cout << "Internal Pass by value error! (function menuFunction)" << std::endl;
+            exit(0);
     }
-    return 0;
 }
 
 int main() {
-    std::string userName;
+
     srand(time(nullptr));
     std::cout
     << "\nWelcome to Billy's word speed type tester!\n"
     << "\nPlease enter your name: ";
 
-    std::cin >> userName;
+    std::cin >> globalUserList[0].name;
 
-    std::cout << "Thank you " << userName << std::endl;
+    std::cout << "Thank you " << globalUserList[0].name << std::endl;
 
     int i = 1;
     while (i == 1) {
-        i = menuFunction(userName);
+        i = menuFunction(globalUserList[0].name);
     }
 
+    std::cout << "Goodbye!" << std::endl;
     return 0;
 }
