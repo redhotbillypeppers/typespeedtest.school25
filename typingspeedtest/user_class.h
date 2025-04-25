@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <fstream>
 
 #ifndef USER_CLASS_H
 #define USER_CLASS_H
@@ -21,6 +22,7 @@ class user {
 
 //0=easy 1=medium 2=hard 3=test emh = easy medium hard
 
+  //simple constructor that accepts the name of the user
   user (std::string n) {
     name = n;
   }
@@ -35,13 +37,6 @@ class user {
       for(float i : WPMGames[j]){
         singleTestSum += i;
       }
-      /*^ above is an "improved" range based for loop?
-       *below is hand made while above is IDE generated
-       *v
-      for(int i = 0; i < WPMGames[j].size(); i++){
-        singleTestSum += WPMGames[j][i];
-      }
-      */
      averageWPM[j] = (singleTestSum / std::size(WPMGames[j]));
      allTestCount += WPMGames[j].size();
      allTestWPMSum += singleTestSum;

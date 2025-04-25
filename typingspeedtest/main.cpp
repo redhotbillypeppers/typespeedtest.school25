@@ -8,9 +8,13 @@
 #include "user_class.h"
 #include "sentence_array.h"
 
+
+//these are two global variables used to track globally the user list, with the data
 user globalUserList[3] = {user(""),user("unnamed_user"),user("unnamed_user")};
 int globalWhichUser = 0;
 
+
+//this is a simple function that allows for a 3, 2, 1 timer to happen before a test.
 void testCountdown () {
     pause(1);
     std::cout << "3\n";
@@ -22,6 +26,7 @@ void testCountdown () {
     std::cout << "Go!" << std::endl;
 }
 
+//this function
 void wpmResponses (float wpm) {
     if (wpm < 45) {
         std::cout << "\nThat was pretty slow... Practice hard and try again!";
@@ -377,6 +382,9 @@ int menuFunction() {
     }
 }
 
+
+//this is my main function that initializes the menu loop for the game
+//there is an rng seeder and there is a 
 int main() {
 
     srand(time(nullptr));
