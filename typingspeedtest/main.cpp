@@ -355,7 +355,7 @@ void statsMenu() {
         testTotalCount = 0; // variable for the test
         menuPrinter(); // print the menu(lambda functions are cool to me)
         std::cin >> userAnswer;
-        while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) { // check if user input is valid, if not, spew error message
+        while ( std::cin.fail() || (userAnswer != 1 && userAnswer != 2 && userAnswer != 3)) { // check if user input is valid, if not, spew error message
             cinClear(); // clear cin register
             std::cout << "Invalid response: Please enter a number between 1-3" << std::endl;
             std::cin >> userAnswer;
