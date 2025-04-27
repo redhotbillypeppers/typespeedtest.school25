@@ -1,10 +1,4 @@
-//
-// Created by benis on 4/4/2025.
-//
 #include <string>
-
-#ifndef SENTENCE_ARRAY_H
-#define SENTENCE_ARRAY_H
 
 //sourced from https://www.manythings.org/sentences/filter/14.html 2240-2260
 
@@ -35,5 +29,3 @@ std::string sentence[21] = {
 "Tom's parents died in an automobile accident when he was three years old.",
 };
 
-
-#endif //SENTENCE_ARRAY_H

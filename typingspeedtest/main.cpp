@@ -2,6 +2,8 @@
 #include <chrono>
 #include <thread>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 #include "word_array_easy.h"
 #include "word_array_hard.h"
 #include "cinClear_nd_pause.h"
@@ -26,6 +28,31 @@ void testCountdown () {
     std::cout << "Go!" << std::endl;
 }
 
+//this function allows for the program to be able to
+void save() {
+    std::ofstream saveData;
+    saveData.open("saveData.txt");
+    saveData << "1" << std::endl;
+    if (saveData.is_open()) {
+        for (int i = 0; i < 3; i++) {
+            saveData << globalUserList[i].name << '\n';
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < globalUserList[i].WPMGames[j].size(); k++) {
+                    if (k < globalUserList[i].WPMGames[j].size()-1) {
+                        saveData << globalUserList[i].WPMGames[j][k] << ",";
+                    }else {
+                        saveData << globalUserList[i].WPMGames[j][k];
+                    }
+                }
+                saveData << '\n';
+            }
+        }
+    } else {
+        std::cout << "Error saving to file: saveData file not open." << std::endl;
+    }
+    saveData.close();
+}
+
 //this function
 void wpmResponses (float wpm) {
     if (wpm < 45) {
@@ -39,6 +66,10 @@ void wpmResponses (float wpm) {
     }
 }
 
+/*
+this function is the analysis test,
+the analysis test is used to try and analyze the users real wpm by allowing 3 different use cases.
+*/
 void analysisTestFunction () {
     int easyListSize = std::size(easyList);
     int hardListSize = std::size(hardList);
@@ -62,8 +93,8 @@ void analysisTestFunction () {
                 attempt++;
                 if (attempt == 2) {
                     std::cout << "You have made too many attempts for this part." << std::endl;
-                    std::cout << "Returning back to menu..." << std::endl;
                     pause(1);
+                    std::cout << "Returning back to menu..." << std::endl;
                     return 0;
                 }
                 std::cout << "You mistyped somewhere in this code. \nRestarting test section...\n";
@@ -141,8 +172,9 @@ void analysisTestFunction () {
     wpmResponses(wpmAverage);
     pause(2);
     std::cout << "\n\nGoing back to menu..." <<std::endl;
-    pause(1);
+    save();
 }
+
 
 void whichTestFunction (int menuChoiceIndex){
     int easyListSize = std::size(easyList);
@@ -232,7 +264,6 @@ void whichTestFunction (int menuChoiceIndex){
             std::cout << "You didnt type the sequence exactly :(";
             pause(1);
             std::cout << "\nGoing back to menu...\n";
-            pause(1);
             std::cout<< randomTestSentence <<"\n" << inputSentence << std::endl;
         } else if (menuChoiceIndex == 2 || menuChoiceIndex == 3) {
             pause(1);
@@ -244,7 +275,6 @@ void whichTestFunction (int menuChoiceIndex){
             wpmResponses(testWPM);
             pause(2);
             std::cout << "\nGoing back to menu...\n";
-            pause(1);
 
         }else {
             pause(1);
@@ -255,9 +285,9 @@ void whichTestFunction (int menuChoiceIndex){
             wpmResponses(testWPM);
             pause(2);
             std::cout << "\nGoing back to menu...\n";
-            pause(1);
         }
     }
+    save();
 }
 
 void statsMenu() {
@@ -296,17 +326,16 @@ void statsMenu() {
         std::cin >> userAnswer;
         while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) {
             cinClear();
-            std::cout << "Invalid input, Please enter a number between 1 and 3: ";
             std::cin >> userAnswer;
         }
 
         switch (userAnswer) {
             case 1:
                 std::cout << "Change username to: " << std::endl;
-                std::cin >> globalUserList[globalWhichUser].name;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::getline(std::cin, globalUserList[globalWhichUser].name, '\n');
                 std::cout << "Username changed to: " << globalUserList[globalWhichUser].name << std::endl;
-                menuPrinter();
-                std::cout << "\nGo back to menu? (Y)" << std::endl;
+                pause(1);
                 break;
             case 2:
                 std::cout << "Change to which user?" << std::endl;
@@ -315,20 +344,20 @@ void statsMenu() {
                 std::cout << "3. " << globalUserList[2].name << std::endl;
                 std::cin >> globalWhichUser;
                 globalWhichUser -= 1;
-                while ( !std::cin.fail() && userAnswer != 1 && userAnswer != 2 && userAnswer != 3) {
+                while (std::cin.fail() || (globalWhichUser != 0 && globalWhichUser != 1 && globalWhichUser != 2)) {
                     cinClear();
                     std::cout << "Invalid input, Please enter a number between 1 and 3: ";
                     std::cin >> globalWhichUser;
+                    std::cout << globalWhichUser;
                     globalWhichUser -= 1;
                 }
                 break;
             case 3:
                 std::cout << "Exiting back to menu..." << std::endl;
-                pause(1);
                 return;
             default:
-                std::cout << "Error: invalid pass by (stats menu)";
-                exit(0);
+                std::cout << "Invalid input, Please enter a number between 1 and 3: ";
+                break;
         }
     }
 }
@@ -382,24 +411,69 @@ int menuFunction() {
     }
 }
 
+void initializer() {
+    srand(time(nullptr)); //sets seed for random number generator
+
+    std::ifstream saveData("saveData.txt");
+    std::string bucket;
+    getline(saveData, bucket,'\n');
+
+    try {
+        //first it checks to see if there is data in the file using 1, if not then the data is to be deleted
+        //and written into using the save() function
+        if (std::stoi(bucket) == 1) {
+
+            for (int i = 0; i < 3; i++) {
+                std::getline(saveData,bucket, '\n');
+                globalUserList[i].name = bucket;
+                for (int j = 0; j < 4; j++) {
+                    std::getline(saveData,bucket);
+                    std::stringstream ss(bucket);
+                    while (getline(ss,bucket,',')) {
+                        globalUserList[i].WPMGames[j].push_back(std::stof(bucket));
+                    }
+                }
+            }
+
+            std::cout << "Welcome back to Billy's Word Speed Type tester! " << std::endl;
+            std::cout << "Who is playing today?" << std::endl;
+            std::cout << "1. " << globalUserList[0].name << std::endl;
+            std::cout << "2. " << globalUserList[1].name << std::endl;
+            std::cout << "3. " << globalUserList[2].name << std::endl;
+            std::cin >> globalWhichUser;
+            globalWhichUser -= 1;
+            while (std::cin.fail() || (globalWhichUser != 0 && globalWhichUser != 1 && globalWhichUser != 2)) {
+                cinClear();
+                std::cout << "Invalid input, Please enter a number between 1 and 3: ";
+                std::cin >> globalWhichUser;
+                globalWhichUser -= 1;
+            }
+            std::cout << "Welcome back " << globalUserList[globalWhichUser].name << "!";
+        }
+    //this will catch the invalid argument from std::stoi in case if there is nothing(aka first time program use)
+    } catch (std::invalid_argument){
+        std::cout << "\nWelcome to Billy's word speed type tester!\n"
+            << "\nPlease enter your name: ";
+        std::getline(std::cin, globalUserList[0].name, '\n');
+        std::cout << "Thank you " << globalUserList[0].name << std::endl;
+    }
+    saveData.close();
+}
 
 //this is my main function that initializes the menu loop for the game
-//there is an rng seeder and there is a 
-int main() {
+//int main function has a simple loop, and initializes using the initializer function
+int main(){
+    //initiializer function
+    initializer();
 
-    srand(time(nullptr));
-    std::cout
-    << "\nWelcome to Billy's word speed type tester!\n"
-    << "\nPlease enter your name: ";
-
-    std::cin >> globalUserList[0].name;
-
-    std::cout << "Thank you " << globalUserList[0].name << std::endl;
-
+    //menu loop
     int i = 1;
     while (i == 1) {
         i = menuFunction();
     }
+
+    //saves player stats using the save function
+    save();
 
     std::cout << "Goodbye!" << std::endl;
     return 0;

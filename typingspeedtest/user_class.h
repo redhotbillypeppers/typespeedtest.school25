@@ -2,31 +2,27 @@
 #include <string>
 #include <fstream>
 
-#ifndef USER_CLASS_H
-#define USER_CLASS_H
-
-#endif //USER_CLASS_H
 //user class made for individual statistic tracking
 class user {
   public:
   //user name
   std::string name;
 
-  //array of 4 vectors that store the game results
-  std::vector<float> WPMGames[4];
-
   //test average wpm variables
   //0 = easy 1= medium
   //2 = hard 3 = test 4 = total average
   float averageWPM[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
-//0=easy 1=medium 2=hard 3=test emh = easy medium hard
+  //array of 4 vectors that store the game results
+  //0=easy 1=medium 2=hard 3=test emh = easy medium hard
+  std::vector<float> WPMGames[4];
+
+
 
   //simple constructor that accepts the name of the user
   user (std::string n) {
     name = n;
   }
-
 
   //method calculates total statistics
   void wpmAverageCalc0123(){
