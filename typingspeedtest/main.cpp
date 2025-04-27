@@ -11,7 +11,14 @@
 #include "user_class.h"
 #include "sentence_array.h"
 
+/*
 
+--------------------------------------HOW TO RUN--------------------------------------
+(Copy and paste this following line in the console)
+g++ speedytyper/speedtype.cpp -o speedytyper/speedtype && ./speedytyper/speedtype
+--------------------------------------------------------------------------------------
+
+*/
 //these are two global variables used to initialize the 3 users and which user is being used.
 //supposedly using global variables are bad practice but because these are used almost everywhere,
 //passing by reference in each function seemed like doing too much and this i thought was the easier path.
