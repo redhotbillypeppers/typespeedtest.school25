@@ -2,8 +2,9 @@
 
 //sourced from https://www.manythings.org/sentences/filter/14.html 2240-2260
 
+
 // this list contains a set of random sentences, each one has 14 words and are
-// all vary similar to type which helps with standardization between tests
+// all vary similar to type which helps to standardize between tests so that they are all mostly similar
 
 std::string sentence[21] = {
 "Someone came into our house and stole some stuff while we were sleeping.",

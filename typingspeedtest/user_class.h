@@ -10,11 +10,11 @@ class user {
 
   //test average wpm variables
   //0 = easy 1= medium
-  //2 = hard 3 = test 4 = total average
+  //2 = hard 3 = analysis 4 = total average
   float averageWPM[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
 
   //array of 4 vectors that store the game results
-  //0=easy 1=medium 2=hard 3=test emh = easy medium hard
+  //0=easy 1=medium 2=hard 3=analysis
   std::vector<float> WPMGames[4];
 
 
@@ -26,17 +26,17 @@ class user {
 
   //method calculates total statistics
   void wpmAverageCalc0123(){
-    float allTestWPMSum = 0.00;
-    float allTestCount = 0.00;
-    for(int j = 0; j<4; j++){
-      float singleTestSum = 0.00;
-      for(float i : WPMGames[j]){
+    float allTestWPMSum = 0.00; //sum of wpm for every test taken (numerator of average formula)
+    float allTestCount = 0.00; //the amount of tests taken in total (denominator of average formula)
+    for(int j = 0; j<4; j++){ // this loop iterates on the 4 vectors holding their respective test stats
+      float singleTestSum = 0.00; //initialize the sum for a singular test for a singular user
+      for(float i : WPMGames[j]){ //sum up the wpm for a singular test for a singular user
         singleTestSum += i;
       }
-     averageWPM[j] = (singleTestSum / std::size(WPMGames[j]));
-     allTestCount += WPMGames[j].size();
-     allTestWPMSum += singleTestSum;
+     averageWPM[j] = (singleTestSum / std::size(WPMGames[j])); //gets the average wpm for a single test for a single user
+     allTestCount += WPMGames[j].size(); //sums the denominator for the average
+     allTestWPMSum += singleTestSum; // sums the numerator for the average
     }
-  averageWPM[4] = allTestWPMSum/allTestCount;
+  averageWPM[4] = allTestWPMSum/allTestCount; // gets the total average wpm for all games of a single user
   }
 };
